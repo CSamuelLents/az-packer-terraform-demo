@@ -17,14 +17,14 @@ This project provides Packer and Terraform templates for deploying a customizabl
 
 ## Getting Started
 
-This assumes you have installed and configured the required dependencies, listed below.
+The following assumes you've installed and configured required dependencies, listed [below](#dependencies).
 
-1. Clone this repository
+1. Clone the repository
 2. Create an Azure resource group for your Packer image and infrastructure
 3. Deploy an (optional) Azure Policy requiring resource tags
 4. Build and deploy the Packer image
 5. Import your resource group using the Terraform CLI
-6. Deploy your Azure infrastructure using Terraform
+6. Deploy the infrastructure using Terraform
 
 ## Dependencies
 
@@ -37,12 +37,13 @@ This assumes you have installed and configured the required dependencies, listed
 
 ### Creating an Azure Resource Group
 
-The resource group needs to be created before running `packer build server.json`, since the image will need a destination once it has been built. You can do this in one of two ways:
+The resource group should be created before running `packer build server.json`, as the image will need a destination. You can do this in two ways:
 
-1. Comment out everything in `main.tf` after the resource group block (after line 12), and follow the instructions under the [Deploying the Infrastructure](#deploying-the-infrastructure) heading below. Once completed, build and deploy the Packer image, uncomment the rest of the template, and run the Terraform plan/deploy steps again.
-2. Create the resource group manually in Azure, set the `ARM_SUBSCRIPTION_ID` and `ARM_RESOURCE_GROUP` variables in your environment and run the provided `import-resource-group.sh` script to import the resource into your Terraform state. Note that the `azurerm_resource_group` resource in `main.tf` should remain as is.
+1. Comment out everything in `main.tf` after the resource group block (after line 12) and everything in `outputs.tf`, and follow the instructions under [Deploying the Infrastructure](#deploying-the-infrastructure) below to deploy the resource group. Once completed, build and deploy the Packer image, uncomment the Terraform templates, and run the Terraform plan/deploy steps again.
 
-### Creating an Azure Policy
+2. Create the resource group manually in Azure, set the `ARM_SUBSCRIPTION_ID` and `ARM_RESOURCE_GROUP` variables in your environment and run the provided `import-resource-group.sh` script to import the resource into your Terraform state. The `azurerm_resource_group` resource in `main.tf` should remain as is.
+
+### Creating a Tagging Policy
 
 1. Navigate to your subscription in Azure
 2. Select `Policies` from the sidebar navigation
@@ -66,15 +67,15 @@ The resource group needs to be created before running `packer build server.json`
 
 1. Run `terraform apply "solution.plan"` from the commandline
 2. Input values for variables as prompted by your terminal
-3. Type `yes` when asked for pre-deployment confirmation
+3. Respond with `yes` when prompted for pre-deployment confirmation
 
 ### Customizing the Deployment
 
-Many aspects of the deployment can be easily customized by updating the default values found in the `vars.tf` file. Of particular interest may be `location`, `vm_size`, and `vm_count`.
+The deployment can be customized by updating the values found in `vars.tf`. Of particular interest may be `location`, `vm_size`, and `vm_count`.
 
 ## Output
 
-The Terraform template outputs include:
+The Terraform templates output the following:
 
 - VM hostname (`hostname`)
 - VM Fully Qualified Domain Name (`vm_fqdn`)
