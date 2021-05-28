@@ -14,12 +14,13 @@
       "image_publisher": "Canonical",
       "image_offer": "UbuntuServer",
       "image_sku": "18.04-LTS",
-      "managed_image_resource_group_name": "udacity-rg",
-      "managed_image_name": "udacity-project-1",
+      "managed_image_resource_group_name": "packer-rg",
+      "managed_image_name": "packer-poc",
       "location": "East US",
       "vm_size": "Standard_A2",
       "azure_tags": {
-        "environment": "development"
+        "environment": "development",
+        "project": "packer-poc"
       }
     }
   ],
